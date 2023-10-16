@@ -3,8 +3,7 @@
 Rscript loci_identifier.R	\
 --input="29273806-GCST006862-EFO_0000270.h.tsv.gz"	\
 --PVAL="p_value"	\
---RegionFlank=500000	\
---prefix=${outprefix}	\
+--RegionFlank=200000	\
 --sigThreshold=5E-8	\
 --pheno="asthma" \
 --CHR="chromosome"	\

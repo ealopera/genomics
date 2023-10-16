@@ -72,8 +72,6 @@ print(opt)
     # opt$RegionFlank<-200000
     # opt$pheno<-"asthma"
     # opt$input<-"29273806-GCST006862-EFO_0000270.h.tsv.gz"
-    # date_label<- paste(strsplit(as.character(date())
-    # ,' ',fixed=TRUE)[[1]][c(3,2,5)],collapse="")
     # opt$prefix<-paste0(date_label,"_",opt$pheno)
     # #snprs<-"variant_id"
 ##################################
@@ -91,9 +89,11 @@ pvalcol <- opt$PVAL
 flank <- as.numeric(opt$RegionFlank)
 prefix<-opt$prefix
 input<-opt$input
-outfile <- gsub(".+/([^/]+$)","\\1",prefix)
-file_summarytable <- paste0(outfile,".loci.txt")
-file_tophits <- paste0(outfile,".hitspE-4.txt")
+date_label<- paste(strsplit(as.character(date()) 
+                            ,' ',fixed=TRUE)[[1]][c(3,2,5)],collapse="")
+outfile <- paste0(gsub(".+/([^/]+$)","\\1",prefix),"_",date_label,"_",pheno)
+file_summarytable <- paste0(outfile,"_loci.txt")
+file_tophits <- paste0(outfile,"_hitspE-4.txt")
 
 ## import summary statistics
 if( grepl(".gz$",input) | grepl(".bgz$",input) ) {
