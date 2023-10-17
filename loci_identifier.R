@@ -190,11 +190,11 @@ which(is.na(resIn$CHR))
 	Locisummary<-data.frame(Locisummary)
 	Locisummary<-data.frame(cbind(Locisummary[,1],hits,Locisummary[,-1]))
 	colnames(Locisummary)<-c("LOCUS",names(hits),"N_VARIANTS","N_HITS","N_SIGNIF","MOST_SIG_SNP","MIN_PVAL")
-	write.table(Locisummary, file_summarytable, col.names=T, row.names=F, quote=F)
+	write.table(Locisummary, file_summarytable, col.names=T, row.names=F, quote=F, sep="\t")
 	###write summary of hits by loci
 	nrow(regionHITS)
 	regionHitSumm<-regionHITS[,c("CHR","BP","ALLELE1","ALLELE2","PVAL","SNP","log10P","CHROMPOS","LOCUSID")]
-	write.table(regionHitSumm, file_tophits, col.names=F, row.names=F, quote=F, sep="\t")
+	write.table(regionHitSumm, file_tophits, col.names=T, row.names=F, quote=F, sep="\t")
 	print(paste0("[INFO] The files ",file_summarytable," and ", file_tophits, "were written in the current directory") )
 	print("[INFO] done")
 	} else {
