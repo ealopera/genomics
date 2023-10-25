@@ -49,7 +49,7 @@ fi
 ml RPlus
 ############################# main #############################################
 
-Rscript loci_identifier.R	\
+Rscript genomics/loci_identifier.R	\
 --input=input	\
 --PVAL=PVAL	\
 --RegionFlank=RegionFlank	\
