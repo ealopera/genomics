@@ -21,8 +21,8 @@ POS=$6
 ALLELE2=$7
 ALLELE1=$8
 RegionFlank=$9	
-sigThreshold=${10}
-prefix=${11}
+sigThreshold=$10
+prefix=$11
 ### failsafe and default variables
 if [ -z "$1" ]
 then
@@ -45,6 +45,8 @@ if  [ -z "$10" ]
 then
       RegionFlank=5E-8
 fi
+#load R
+ml RPlus
 ############################# main #############################################
 
 Rscript loci_identifier.R	\
@@ -71,5 +73,3 @@ Rscript loci_identifier.R	\
 #--POS="base_pair_location"	\
 #--ALLELE1="other_allele"	\
 #--ALLELE2="effect_allele"
-
-
