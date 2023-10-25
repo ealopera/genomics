@@ -21,8 +21,8 @@ POS=$6
 ALLELE2=$7
 ALLELE1=$8
 RegionFlank=$9	
-sigThreshold=$10
-prefix=$11
+sigThreshold=${10}
+prefix=${11}
 ### failsafe and default variables
 if [ -z "$1" ]
 then
@@ -41,7 +41,7 @@ then
       RegionFlank=200000
 fi
 
-if  [ -z "$10" ]
+if  [ -z "{$10}" ]
 then
       RegionFlank=5E-8
 fi
@@ -50,17 +50,17 @@ ml RPlus
 ############################# main #############################################
 
 Rscript genomics/loci_identifier.R	\
---input=input	\
---PVAL=PVAL	\
---RegionFlank=RegionFlank	\
---sigThreshold=sigThreshold	\
---pheno=pheno \
---CHR=CHR	\
---POS=POS	\
---ALLELE1=ALLELE1	\
---ALLELE2=ALLELE2 \
---prefix=prefix \
---SNP=SNP
+--input=$input	\
+--PVAL=$PVAL	\
+--RegionFlank=$RegionFlank	\
+--sigThreshold=$sigThreshold	\
+--pheno=$pheno \
+--CHR=$CHR	\
+--POS=$POS	\
+--ALLELE1=$ALLELE1	\
+--ALLELE2=$ALLELE2 \
+--prefix=$prefix \
+--SNP=$SNP
 
 ######test run
 #Rscript  genomics/loci_identifier.R	\
