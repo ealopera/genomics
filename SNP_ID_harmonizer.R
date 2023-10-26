@@ -55,7 +55,7 @@ option_list <- list(
   make_option("--SNP", type="character", default="SNP",
               help="colnames for SNP identifier  (rs code) in the target file"),
   make_option(c("-p", "--prefix"), type="character", default="",
-              help="prefix for output files"),
+              help="prefix for output files")
 )
 opt_parser  <- OptionParser(option_list=option_list)
 opt <- parse_args(opt_parser)
