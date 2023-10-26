@@ -151,7 +151,7 @@ dat1$SNPchange<-case_when(dat1$rA1==dat1$A1 & dat1$rA2==dat1$A2~ "no_change",
 report<-table(dat1$SNPchange)
 print("finished harmonization, found:")
 print(report)
-write.table(dat1,file_result,quote=F,sep='t/',row.names = F)
-write.table(report,file_report,quote=F,sep='t/')
+write.table(dat1,file_result,quote=F,sep='\t',row.names = F)
+write.table(report,file_report,quote=F,sep='\t',row.names = F)
 print("Harmonized file saved in current directory")
 ##done###
