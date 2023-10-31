@@ -69,6 +69,7 @@ if (is.null(opt$file)){
 # outdir<-"/u/project/loes/elopera/"
 # opt$prefix<-"daner_PGC_BIP32b_mds7a"
 ### deinfe variables
+snpcol<- opt$SNP
 chrcol <- opt$CHR
 poscol <- opt$POS
 A1col <- opt$A1
