@@ -31,6 +31,8 @@ option_list = list(
   make_option(c("-t", "--tdir"), type="logical", default=F, 
               help="path to the liftover executalbe file",
               metavar="character"),
+  	make_option("--SNP", type="character", default="snpid",
+                help="colnames for SNP ID"),
   make_option(c("-r", "--refdir"), type="character", default=NULL, 
               help="Path to directory for reference hg19ToHg38.over.chain.gz",
               metavar="character"),
