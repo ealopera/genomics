@@ -28,7 +28,7 @@ option_list = list(
   make_option(c("-f", "--file"), type="character", default=NULL, 
               help="path to the summ-stats file", 
               metavar="character"),
-  make_option(c("-t", "--tdir"), type="logical", default=F, 
+  make_option(c("-t", "--tdir"), type="character", default=F, 
               help="path to the liftover executalbe file",
               metavar="character"),
   	make_option("--SNP", type="character", default="snpid",
@@ -73,7 +73,6 @@ chrcol <- opt$CHR
 poscol <- opt$POS
 A1col <- opt$A1
 A2col <- opt$A2
-opt<-list()
 wkdir<-opt$wkdir
 inpfile<-opt$file
 lift<-opt$lift
