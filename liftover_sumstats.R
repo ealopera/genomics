@@ -84,9 +84,9 @@ phename<-opt$prefix
 ### load data
 input_file<-file.path(wkdir,inpfile)
 if( grepl(".gz$",inpfile) | grepl(".bgz$",inpfile) ) {
-  sumstats = fread(cmd=paste0("gunzip -c ", inpfile), header=T)
+  sumstats = fread(cmd=paste0("gunzip -c ", inpfile), header=T,fill=TRUE)
 } else {
-  sumstats <- fread(inpfile, header=T)
+  sumstats <- fread(inpfile, header=T,fill=TRUE)
 }
 setnames(sumstats, c(snpcol,chrcol, poscol, A1col, A2col), c("SNP","CHR", "BP", "A1", "A2"))
 ### convert X chromosome snps name
