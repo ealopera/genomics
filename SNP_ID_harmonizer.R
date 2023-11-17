@@ -1,8 +1,8 @@
 #!/usr/bin/env Rscript
 ################################## 
 ### Function: SNP ID harmonizer for GWAS results
-### date 25-Oct-2023
-### version 1.0
+### date created: 25-Oct-2023
+### version 1.1.0
 ### author: EALM (ealopera@gmail.com)
 ##################################
 ## Notes
@@ -16,6 +16,8 @@
 # Req. columns for input: rCHR, rPOS , rA1, rA2, CHR, POS , A1, A2,
 # indicated by column names.
 ## New
+# 17-nov-2023
+# added snipped to output the BETA column in the harmonized files
 ##################################
 #### set up ####
 options(stringsAsFactors=F)
@@ -52,6 +54,8 @@ option_list <- list(
               help="colnames for genome position"),
   make_option("--PVAL", type="character", default="P",
               help="colnames for p value of target file"),
+    make_option("--effect", type="character", default="BETA",
+              help="colnames for effect (beta/BETA or OR/or) "),
   make_option("--SNP", type="character", default="SNP",
               help="colnames for SNP identifier  (rs code) in the target file"),
   make_option(c("-p", "--prefix"), type="character", default="",
@@ -92,6 +96,7 @@ input<-opt$input
 refinput<-opt$refinput
 pvalcol<-opt$PVAL
 snpcol<-opt$SNP
+effectcol<-opt$effect
 
 outfile <- paste0(gsub(".+/([^/]+$)","\\1",prefix),"_SNPharmo")
 file_result <- paste0(outfile,".txt")
@@ -99,9 +104,9 @@ file_report <- paste0(outfile,"_report.txt")
 
 ## import objective file
 if( grepl(".gz$",input) | grepl(".bgz$",input) ) {
-  dat1_1 = fread(cmd=paste0("gunzip -c ", input), header=T, select=c(snpcol,pvalcol,chrcol, poscol, A1col, A2col))
+  dat1_1 = fread(cmd=paste0("gunzip -c ", input), header=T, select=c(snpcol,pvalcol,chrcol, poscol, A1col, A2col, effectcol))
 } else {
-  dat1_1 <- fread(input, header=T, select=c(snpcol,pvalcol,chrcol, poscol, A1col, A2col))
+  dat1_1 <- fread(input, header=T, select=c(snpcol,pvalcol,chrcol, poscol, A1col, A2col, effectcol))
 }
 ## import reference file
 if( grepl(".gz$",input) | grepl(".bgz$",refinput) ) {
@@ -116,9 +121,8 @@ print("[INFO] ref and input files imported,  with columns:")
 print(names(datref))
 
 ## format SNP data
-
 dat1 = dat1_1[, c(snpcol,pvalcol,chrcol, poscol, A1col, A2col), with=FALSE]
-setnames(dat1, c(snpcol,pvalcol,chrcol, poscol, A1col, A2col), c("SNPname","P","CHR", "BP", "A1", "A2"))
+setnames(dat1, c(snpcol,pvalcol,chrcol, poscol, A1col, A2col), c("SNPname","P","CHR", "BP", "A1", "A2","BETA"))
 setnames(datref, c(rchrcol, rposcol, rA1col, rA2col), c("rCHR", "rBP", "rA1", "rA2"))
 print("OK1")
 
@@ -129,6 +133,12 @@ datref$rA2 = toupper(datref$rA2)
 dat1$CHR <- gsub("chr","",dat1$CHR)
 datref$CHR <- gsub("chr","",datref$CHR)
 dat1$CHR <- as.numeric(gsub("X","23",dat1$CHR))
+##format effect column
+if (effectcol %like% "OR"| effectcol %like% "or" 
+    | effectcol %like% "odds" |effectcol %like% "atio" ) {
+  dat1$BETA<-log(dat1$BETA)
+  print(paste0("Odds ratio column ", effectcol, " was transformed into effect size BETA "))
+}
 #build equal positions column 
 dat1$CHR_POS<-paste0(dat1$CHR,"_",dat1$BP)
 datref$CHR_POS<-paste0(datref$rCHR,"_",datref$rBP)
@@ -153,5 +163,5 @@ print("finished harmonization, found:")
 print(report)
 write.table(dat1,file_result,quote=F,sep='\t',row.names = F)
 write.table(report,file_report,quote=F,sep='\t',row.names = F)
-print("Harmonized file saved in current directory")
+print("[INFO] Harmonized file saved in current directory")
 ##done###
