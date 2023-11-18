@@ -121,7 +121,7 @@ print("[INFO] ref and input files imported,  with columns:")
 print(names(datref))
 
 ## format SNP data
-dat1 = dat1_1[, c(snpcol,pvalcol,chrcol, poscol, A1col, A2col), with=FALSE]
+dat1 = dat1_1[, c(snpcol,pvalcol,chrcol, poscol, A1col, A2col, effectcol), with=FALSE]
 setnames(dat1, c(snpcol,pvalcol,chrcol, poscol, A1col, A2col), c("SNPname","P","CHR", "BP", "A1", "A2","BETA"))
 setnames(datref, c(rchrcol, rposcol, rA1col, rA2col), c("rCHR", "rBP", "rA1", "rA2"))
 print("OK1")
