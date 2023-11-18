@@ -136,6 +136,7 @@ dat1$CHR <- as.numeric(gsub("X","23",dat1$CHR))
 ##format effect column
 if (effectcol %like% "OR"| effectcol %like% "or" 
     | effectcol %like% "odds" |effectcol %like% "atio" ) {
+  dat1$BETA<-as.numeric(dat1$BETA)
   dat1$BETA<-log(dat1$BETA)
   print(paste0("Odds ratio column ", effectcol, " was transformed into effect size BETA "))
 }
