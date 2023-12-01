@@ -146,6 +146,8 @@ datref$CHR_POS<-paste0(datref$rCHR,"_",datref$rBP)
 #cut reference to the SNPs contained in data only
 inref<-which(datref$CHR_POS %in% dat1$CHR_POS )
 datref<-datref[inref,]
+##remove SNPs without position in original data
+datref<-datref[which(!is.na(datref$BP)),]
 # bring data from ref
 dat1$rA1<-datref$rA1[match(dat1$CHR_POS,datref$CHR_POS)]
 dat1$rA2<-datref$rA2[match(dat1$CHR_POS,datref$CHR_POS)]
