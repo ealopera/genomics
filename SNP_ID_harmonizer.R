@@ -64,21 +64,22 @@ option_list <- list(
 opt_parser  <- OptionParser(option_list=option_list)
 opt <- parse_args(opt_parser)
 print(opt)
-## test & developing data
+# # test & developing data
 #  opt<-list()
 # opt$CHR<-"CHR"
-# opt$POS<-"BP"
+# opt$POS<-"POS"
 # opt$A2<-"A2"
 # opt$A1<-"A1"
 # opt$rCHR<-"CHROM"
 # opt$rPOS<-"POS"
 # opt$rA2<-"ALT"
 # opt$rA1<-"REF"
-# opt$input<-"PGC_BP_5e-04.txt"
-# opt$refinput<-"genotype_SNPlist.txt"
-# opt$prefix<-"BDpaisa"
+# opt$input<-"1.daner_MDDwoBP_20201001_2015iR15iex_HRC_MDDwoBP_iPSYCH2015i_lifted.txt"
+# opt$refinput<-"/u/project/loes/elopera/genotypes/QCedv3/SNPs.list"
+# opt$prefix<-"MDD"
 # opt$PVAL<-"P"
 # opt$SNP<-"SNP"
+# opt$effect<-"OR"
 ##################################
 #### main ####
 ##################################
@@ -109,7 +110,7 @@ if( grepl(".gz$",input) | grepl(".bgz$",input) ) {
   dat1_1 <- fread(input, header=T, select=c(snpcol,pvalcol,chrcol, poscol, A1col, A2col, effectcol))
 }
 ## import reference file
-if( grepl(".gz$",input) | grepl(".bgz$",refinput) ) {
+if( grepl(".gz$",refinput) | grepl(".bgz$",refinput) ) {
   datref <-fread(cmd=paste0("gunzip -c ", reefinput), header=T, select=c(rchrcol, rposcol, rA1col, rA2col))
 } else {
   datref<- fread(refinput, header=T, select=c(rchrcol, rposcol, rA1col, rA2col))
@@ -147,7 +148,7 @@ datref$CHR_POS<-paste0(datref$rCHR,"_",datref$rBP)
 inref<-which(datref$CHR_POS %in% dat1$CHR_POS )
 datref<-datref[inref,]
 ##remove SNPs without position in original data
-datref<-datref[which(!is.na(datref$BP)),]
+dat1<-dat1[which(!is.na(dat1$BP)),]
 # bring data from ref
 dat1$rA1<-datref$rA1[match(dat1$CHR_POS,datref$CHR_POS)]
 dat1$rA2<-datref$rA2[match(dat1$CHR_POS,datref$CHR_POS)]
